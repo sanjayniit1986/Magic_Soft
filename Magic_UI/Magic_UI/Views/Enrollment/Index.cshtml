@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Magic_UI.Models.list_studentenrollment>
+@{
+    ViewBag.Title = "Student Enrollment";
+}
+
+<h2>Student Enrollment</h2>
+
+
+@using (Html.BeginForm("Index", "Enrollment", FormMethod.Get))
+{
+
+
+    <p>
+
+
+        <table class="table">
+            <tr>
+                <td>Find by Student </td>
+                <td>:</td>
+                <td>
+                    @Html.DropDownList("StudentID", (IEnumerable<SelectListItem>)ViewBag.StudentDetail, "Select Student"
+                        , new { @onchange = "$('#SchoolYearID').val('')" }
+                )
+                </td>
+            </tr>
+
+            <tr>
+                <td>Find by School Year</td>
+                <td>:</td>
+                <td>
+                    @Html.DropDownList("SchoolYearID", (IEnumerable<SelectListItem>)ViewBag.SchoolYear, "Select School Year"
+                    , new { @onchange = "$('#StudentID').val('')" }
+                )
+                    <input type="submit" value="Search" />
+                </td>
+            </tr>
+
+        </table>
+
+    </p>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Date Of Birth
+        </th>
+        <th>
+            SSN
+        </th>
+        <th>
+            School Year
+        </th>
+        <th>
+            Start Date
+        </th>
+        <th>
+            End Date
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @string.Format("{0:MMM/dd/yyyy}", Convert.ToDateTime(Html.DisplayFor(modelItem => item.DateOfBirth).ToString()))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ssn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SchoolYear)
+            </td>
+            <td>
+                @string.Format("{0:MMM/dd/yyyy}", Convert.ToDateTime(Html.DisplayFor(modelItem => item.StartDate).ToString()))
+            </td>
+            <td>
+                @string.Format("{0:MMM/dd/yyyy}", Convert.ToDateTime(Html.DisplayFor(modelItem => item.EndDate).ToString()))
+            </td>
+        </tr>
+    }
+
+</table>
+
