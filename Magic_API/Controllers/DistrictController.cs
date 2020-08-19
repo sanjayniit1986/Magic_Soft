@@ -1,42 +1,34 @@
-﻿using System;
+﻿using Magic_API.Models;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using Magic_API.Models;
 
 namespace Magic_API.Controllers
 {
     public class DistrictController : ApiController
     {
+
         [HttpGet]
         public IHttpActionResult Get()
         {
-            List<list_selectedlist> lstData = new List<list_selectedlist>();
-
-            cls_Student obj_StudentDetail = new cls_Student();
-            DataTable vDT = obj_StudentDetail.GetDistrict();
-
-            if (vDT != null)
+            List<list_selectedlist> _DistList = null;
+            using (var dbobj = new DB_Magic_StudentEntities())
             {
-                if (vDT.Rows.Count > 0)
-                {
-                    int i;
-
-                    for (i = 0; i < vDT.Rows.Count; i++)
+                _DistList = dbobj.tbl_Master_District.Select(
+                    Dis => new list_selectedlist()
                     {
-                        lstData.Add(new list_selectedlist
-                        {
-                            Value = Convert.ToInt16(vDT.Rows[i]["DistrictID"])
-                            ,
-                            Text = vDT.Rows[i]["DistrictName"].ToString()
-                        });
+                        Value = Dis.DistrictID
+                        ,
+                        Text = Dis.DistrictName
                     }
-                }
+                    ).ToList<list_selectedlist>();
             }
-            return Ok(lstData);
+            if (_DistList.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(_DistList);
         }
-	}
+    }
 }

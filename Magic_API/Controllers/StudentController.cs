@@ -12,87 +12,77 @@ namespace Magic_API.Controllers
     public class StudentController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult Get(string DistrictId)
+        public IHttpActionResult Get(decimal DistrictId)
         {
-            List<list_student> lstData = new List<list_student>();
-
-
+            List<list_student> _StudentList = null;
             if (DistrictId != null)
             {
-
-                cls_Student obj_StudentDetail = new cls_Student();
-                DataTable vDT = obj_StudentDetail.GetStudentList(DistrictId);
-
-                if (vDT != null)
+                using (var dbobj = new DB_Magic_StudentEntities())
                 {
-                    if (vDT.Rows.Count > 0)
-                    {
-                        int i;
-
-                        for (i = 0; i < vDT.Rows.Count; i++)
+                    _StudentList = dbobj.tbl_Master_Student
+                        .Where(Student => Student.IsActive == "Y")
+                        .Where(Student => Student.IsDeleted == "N")
+                        .Where(Student => Student.RefDistrictId == DistrictId)
+                        .Select(
+                        Student => new list_student()
                         {
-                            lstData.Add(new list_student
-                            {
-                                StudentID = Convert.ToInt16(vDT.Rows[i]["StudentID"])
+                            StudentID = Student.StudentID
                                 ,
-                                FirstName = vDT.Rows[i]["FirstName"].ToString()
+                            FirstName = Student.FirstName
                                 ,
-                                LastName = vDT.Rows[i]["LastName"].ToString()
+                            LastName = Student.LastName
                                 ,
-                                DateOfBirth = vDT.Rows[i]["DateOfBirth"].ToString()
+                            DateOfBirth = Student.DateOfBirth.Value
                                 ,
-                                Ssn = vDT.Rows[i]["Ssn"].ToString()
+                            Ssn = Student.Ssn
                                 ,
-                                Text = vDT.Rows[i]["FirstName"].ToString() + " " + vDT.Rows[i]["LastName"].ToString()
+                            Text = Student.FirstName + " " + Student.LastName
                                 ,
-                                Value = Convert.ToInt16(vDT.Rows[i]["StudentID"])
-                            });
+                            Value = Student.StudentID
                         }
-                    }
-                }
-
+                        ).ToList<list_student>();
+                }                
             }
-            return Ok(lstData);
+            if (_StudentList.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(_StudentList);
         }
 
         [HttpGet]
         public IHttpActionResult Get()
         {
-            List<list_student> lstData = new List<list_student>();
-
-            cls_Student obj_StudentDetail = new cls_Student();
-            DataTable vDT = obj_StudentDetail.GetStudentList("0");
-
-            if (vDT != null)
+            List<list_student> _StudentList = null;
+            using (var dbobj = new DB_Magic_StudentEntities())
             {
-                if (vDT.Rows.Count > 0)
-                {
-                    int i;
-
-                    for (i = 0; i < vDT.Rows.Count; i++)
+                _StudentList = dbobj.tbl_Master_Student
+                    .Where(Student => Student.IsActive == "Y")
+                    .Where(Student => Student.IsDeleted == "N")
+                    .Select(
+                    Student => new list_student()
                     {
-                        lstData.Add(new list_student
-                        {
-                            StudentID = Convert.ToInt16(vDT.Rows[i]["StudentID"])
+                        StudentID = Student.StudentID
                             ,
-                            FirstName = vDT.Rows[i]["FirstName"].ToString()
+                        FirstName = Student.FirstName
                             ,
-                            LastName = vDT.Rows[i]["LastName"].ToString()
+                        LastName = Student.LastName
                             ,
-                            DateOfBirth = vDT.Rows[i]["DateOfBirth"].ToString()
+                        DateOfBirth = Student.DateOfBirth.Value
                             ,
-                            Ssn = vDT.Rows[i]["Ssn"].ToString()
+                        Ssn = Student.Ssn
                             ,
-                            Text = vDT.Rows[i]["FirstName"].ToString() + " " + vDT.Rows[i]["LastName"].ToString()
+                        Text = Student.FirstName + " " + Student.LastName
                             ,
-                            Value = Convert.ToInt16(vDT.Rows[i]["StudentID"])
-                        });
+                        Value = Student.StudentID
                     }
-                }
-
-
+                    ).ToList<list_student>();
             }
-            return Ok(lstData);
+            if (_StudentList.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(_StudentList);
         }
-	}
+    }
 }

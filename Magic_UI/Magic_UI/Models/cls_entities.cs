@@ -2,15 +2,16 @@
 
 
 
+using System;
 namespace Magic_UI.Models
 {
     public class list_student
     {
-        public int StudentID { get; set; }
-        public int DistrictId { get; set; }
+        public decimal StudentID { get; set; }
+        public decimal DistrictId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string Ssn { get; set; }
     }
 

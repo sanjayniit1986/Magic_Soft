@@ -1,8 +1,7 @@
 ﻿using Magic_API.Models;
-using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Web.Http;
+using System.Linq;
 
 namespace Magic_API.Controllers
 {
@@ -11,29 +10,25 @@ namespace Magic_API.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            List<list_selectedlist> lstData = new List<list_selectedlist>();
 
-            cls_Student obj_StudentDetail = new cls_Student();
-            DataTable vDT = obj_StudentDetail.GetSchoolYearList();
+            List<list_selectedlist> _SchoolYearList = null;
 
-            if (vDT != null)
+            using (var dbobj = new DB_Magic_StudentEntities())
             {
-                if (vDT.Rows.Count > 0)
-                {
-                    int i;
-
-                    for (i = 0; i < vDT.Rows.Count; i++)
+                _SchoolYearList = dbobj.tbl_Master_SchoolYear.Select(
+                    School => new list_selectedlist()
                     {
-                        lstData.Add(new list_selectedlist
-                        {
-                            Value = Convert.ToInt16(vDT.Rows[i]["SchoolYearId"])
-                            ,
-                            Text = vDT.Rows[i]["SchoolYear"].ToString()
-                        });
+                        Value = School.SchoolYearId
+                        ,
+                        Text = School.SchoolYear
                     }
-                }
+                    ).ToList<list_selectedlist>();
             }
-            return Ok(lstData);
+            if (_SchoolYearList.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(_SchoolYearList);
         }
     }
 }

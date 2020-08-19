@@ -39,11 +39,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -143,8 +148,55 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\cls_DB.cs" />
     <Compile Include="Models\cls_Entities.cs" />
+    <Compile Include="Models\DB_Magic_StudentEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Magic_StudentEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB_Magic_StudentEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB_Magic_StudentEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Magic_StudentEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PROC_GetStudentDetail_Result.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PROC_GetStudentEnrollmentDetail_Result.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PROC_GetStudentServiceDetail_Result.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PROC_Get_District_Result.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PROC_Get_SchoolYear_Result.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Master_District.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Master_SchoolYear.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Master_Services.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Master_Student.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Master_StudentEnrollment.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Master_StudentServices.cs">
+      <DependentUpon>DB_Magic_StudentEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +219,23 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <EntityDeploy Include="Models\DB_Magic_StudentEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DB_Magic_StudentEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DB_Magic_StudentEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DB_Magic_StudentEntities.edmx</DependentUpon>
+      <LastGenOutput>DB_Magic_StudentEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DB_Magic_StudentEntities.edmx.diagram">
+      <DependentUpon>DB_Magic_StudentEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\DB_Magic_StudentEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DB_Magic_StudentEntities.edmx</DependentUpon>
+      <LastGenOutput>DB_Magic_StudentEntities.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -189,7 +258,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

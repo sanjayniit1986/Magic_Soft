@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Web.Http;
+using System.Linq;
 
 namespace Magic_API.Controllers
 {
@@ -11,100 +12,118 @@ namespace Magic_API.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            List<list_service> lstData = new List<list_service>();
-
-            cls_Student obj_StudentDetail = new cls_Student();
-            DataTable vDT = obj_StudentDetail.GetStudentServicesList("0", "0");
-
-            if (vDT != null)
+            List<list_studentservice> _StudentServiceList = null;
+            using (var dbobj = new DB_Magic_StudentEntities())
             {
-                if (vDT.Rows.Count > 0)
-                {
-                    int i;
 
-                    for (i = 0; i < vDT.Rows.Count; i++)
+                _StudentServiceList = dbobj.PROC_GetStudentServiceDetail(0, 0).Select(
+                    Student => new list_studentservice()
                     {
-                        lstData.Add(new list_service
-                        {
-                            StudentID = Convert.ToInt16(vDT.Rows[i]["StudentID"])
-                            ,
-                            FirstName = vDT.Rows[i]["FirstName"].ToString()
-                            ,
-                            LastName = vDT.Rows[i]["LastName"].ToString()
-                            ,
-                            DateOfBirth = vDT.Rows[i]["DateOfBirth"].ToString()
-                            ,
-                            Ssn = vDT.Rows[i]["Ssn"].ToString()
-                            ,
-                            SchoolYear = vDT.Rows[i]["SchoolYear"].ToString()
-                            ,
-                            StartDate = vDT.Rows[i]["StartDate"].ToString()
-                            ,
-                            EndDate = vDT.Rows[i]["EndDate"].ToString()
-                            ,
-                            ServiceName = vDT.Rows[i]["ServiceName"].ToString()
 
-                        });
+                        StudentID = Student.StudentID
+                            ,
+                        FirstName = Student.FirstName
+                            ,
+                        LastName = Student.LastName
+                            ,
+                        DateOfBirth = Student.DateOfBirth
+                            ,
+                        Ssn = Student.Ssn
+                            ,
+                        SchoolYear = Student.SchoolYear
+                            ,
+                        StartDate = Student.StartDate.Value
+                            ,
+                        EndDate = Student.EndDate.Value
+                        ,
+                        ServiceName = Student.ServiceName
                     }
-                }
-
-
+                    ).ToList<list_studentservice>();
             }
-            return Ok(lstData);
+
+            if (_StudentServiceList.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(_StudentServiceList);
+
+
+
+
         }
 
         [HttpGet]
-        public IHttpActionResult Get(string SchoolYearID, string StudentID)
+        public IHttpActionResult Get(decimal SchoolYearID, decimal StudentID)
         {
-            List<list_service> lstData = new List<list_service>();
 
-            cls_Student obj_StudentDetail = new cls_Student();
-            DataTable vDT = new DataTable();
-
-            if (SchoolYearID != null && SchoolYearID != "0")
+            List<list_studentservice> _StudentServiceList = null;
+            using (var dbobj = new DB_Magic_StudentEntities())
             {
-                vDT = obj_StudentDetail.GetStudentServicesList("0", SchoolYearID);
-            }
-            else if (StudentID != null && StudentID != "0")
-            {
-                vDT = obj_StudentDetail.GetStudentServicesList(StudentID, "0");
-            }
-
-            if (vDT != null)
-            {
-                if (vDT.Rows.Count > 0)
+                if (SchoolYearID != null && SchoolYearID != 0)
                 {
-                    int i;
+                    _StudentServiceList = dbobj.PROC_GetStudentServiceDetail(0, SchoolYearID).Select(
+                     Student => new list_studentservice()
+                     {
 
-                    for (i = 0; i < vDT.Rows.Count; i++)
-                    {
-                        lstData.Add(new list_service
-                        {
-                            StudentID = Convert.ToInt16(vDT.Rows[i]["StudentID"])
-                            ,
-                            FirstName = vDT.Rows[i]["FirstName"].ToString()
-                            ,
-                            LastName = vDT.Rows[i]["LastName"].ToString()
-                            ,
-                            DateOfBirth = vDT.Rows[i]["DateOfBirth"].ToString()
-                            ,
-                            Ssn = vDT.Rows[i]["Ssn"].ToString()
-                            ,
-                            SchoolYear = vDT.Rows[i]["SchoolYear"].ToString()
-                            ,
-                            StartDate = vDT.Rows[i]["StartDate"].ToString()
-                            ,
-                            EndDate = vDT.Rows[i]["EndDate"].ToString()
+                         StudentID = Student.StudentID
                              ,
-                            ServiceName = vDT.Rows[i]["ServiceName"].ToString()
-
-                        });
-                    }
+                         FirstName = Student.FirstName
+                             ,
+                         LastName = Student.LastName
+                             ,
+                         DateOfBirth = Student.DateOfBirth
+                             ,
+                         Ssn = Student.Ssn
+                             ,
+                         SchoolYear = Student.SchoolYear
+                             ,
+                         StartDate = Student.StartDate.Value
+                             ,
+                         EndDate = Student.EndDate.Value
+                         ,
+                         ServiceName = Student.ServiceName
+                     }
+                     ).ToList<list_studentservice>();
                 }
+                else if (StudentID != null && StudentID != 0)
+                {
 
+                    _StudentServiceList = dbobj.PROC_GetStudentServiceDetail(StudentID, 0).Select(
+                        Student => new list_studentservice()
+                        {
 
+                            StudentID = Student.StudentID
+                                ,
+                            FirstName = Student.FirstName
+                                ,
+                            LastName = Student.LastName
+                                ,
+                            DateOfBirth = Student.DateOfBirth
+                                ,
+                            Ssn = Student.Ssn
+                                ,
+                            SchoolYear = Student.SchoolYear
+                                ,
+                            StartDate = Student.StartDate.Value
+                                ,
+                            EndDate = Student.EndDate.Value
+                            ,
+                            ServiceName = Student.ServiceName
+                        }
+                        ).ToList<list_studentservice>();
+                }
             }
-            return Ok(lstData);
+
+            if (_StudentServiceList.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(_StudentServiceList);
+
+
+
+
+
         }
     }
 }

@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_Magic_StudentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Master_District">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DistrictName" Type="varchar" MaxLength="100" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="IsDeleted" Type="char" MaxLength="1" />
+          <Property Name="InsertedOn" Type="datetime" />
+          <Property Name="InsertedBy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="datetime" />
+          <Property Name="ModifyBy" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_SchoolYear">
+          <Key>
+            <PropertyRef Name="SchoolYearId" />
+          </Key>
+          <Property Name="SchoolYearId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SchoolYear" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="IsDeleted" Type="char" MaxLength="1" />
+          <Property Name="InsertedOn" Type="datetime" />
+          <Property Name="InsertedBy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="datetime" />
+          <Property Name="ModifyBy" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_Services">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="100" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="IsDeleted" Type="char" MaxLength="1" />
+          <Property Name="InsertedOn" Type="datetime" />
+          <Property Name="InsertedBy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="datetime" />
+          <Property Name="ModifyBy" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefDistrictId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Ssn" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="IsDeleted" Type="char" MaxLength="1" />
+          <Property Name="InsertedOn" Type="datetime" />
+          <Property Name="InsertedBy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="datetime" />
+          <Property Name="ModifyBy" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_StudentEnrollment">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefStudentId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="RefSchoolYearID" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="IsDeleted" Type="char" MaxLength="1" />
+          <Property Name="InsertedOn" Type="datetime" />
+          <Property Name="InsertedBy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="datetime" />
+          <Property Name="ModifyBy" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_StudentServices">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefStudentId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="RefServiceID" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="RefSchoolYearID" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="IsDeleted" Type="char" MaxLength="1" />
+          <Property Name="InsertedOn" Type="datetime" />
+          <Property Name="InsertedBy" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="datetime" />
+          <Property Name="ModifyBy" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <Function Name="PROC_Get_District" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_Get_SchoolYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_GetStudentDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictID" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="PROC_GetStudentEnrollmentDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentID" Type="numeric" Mode="In" />
+          <Parameter Name="SchoolYearID" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="PROC_GetStudentServiceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentID" Type="numeric" Mode="In" />
+          <Parameter Name="SchoolYearID" Type="numeric" Mode="In" />
+        </Function>
+        <EntityContainer Name="DB_Magic_StudentModelStoreContainer">
+          <EntitySet Name="tbl_Master_District" EntityType="Self.tbl_Master_District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Master_SchoolYear" EntityType="Self.tbl_Master_SchoolYear" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Master_Services" EntityType="Self.tbl_Master_Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Master_Student" EntityType="Self.tbl_Master_Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Master_StudentEnrollment" EntityType="Self.tbl_Master_StudentEnrollment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Master_StudentServices" EntityType="Self.tbl_Master_StudentServices" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_Magic_StudentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_Master_District">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DistrictName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsDeleted" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+          <Property Name="InsertedBy" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_SchoolYear">
+          <Key>
+            <PropertyRef Name="SchoolYearId" />
+          </Key>
+          <Property Name="SchoolYearId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SchoolYear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsDeleted" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+          <Property Name="InsertedBy" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_Services">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsDeleted" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+          <Property Name="InsertedBy" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RefDistrictId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Ssn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsDeleted" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+          <Property Name="InsertedBy" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_StudentEnrollment">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RefStudentId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RefSchoolYearID" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsDeleted" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+          <Property Name="InsertedBy" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="tbl_Master_StudentServices">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RefStudentId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RefServiceID" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RefSchoolYearID" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsDeleted" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+          <Property Name="InsertedBy" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ModifyOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityContainer Name="DB_Magic_StudentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Master_District" EntityType="Self.tbl_Master_District" />
+          <EntitySet Name="tbl_Master_SchoolYear" EntityType="Self.tbl_Master_SchoolYear" />
+          <EntitySet Name="tbl_Master_Services" EntityType="Self.tbl_Master_Services" />
+          <EntitySet Name="tbl_Master_Student" EntityType="Self.tbl_Master_Student" />
+          <EntitySet Name="tbl_Master_StudentEnrollment" EntityType="Self.tbl_Master_StudentEnrollment" />
+          <EntitySet Name="tbl_Master_StudentServices" EntityType="Self.tbl_Master_StudentServices" />
+          <FunctionImport Name="PROC_Get_District" ReturnType="Collection(DB_Magic_StudentModel.PROC_Get_District_Result)" />
+          <FunctionImport Name="PROC_Get_SchoolYear" ReturnType="Collection(DB_Magic_StudentModel.PROC_Get_SchoolYear_Result)" />
+          <FunctionImport Name="PROC_GetStudentDetail" ReturnType="Collection(DB_Magic_StudentModel.PROC_GetStudentDetail_Result)">
+            <Parameter Name="DistrictID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_GetStudentEnrollmentDetail" ReturnType="Collection(DB_Magic_StudentModel.PROC_GetStudentEnrollmentDetail_Result)">
+            <Parameter Name="StudentID" Mode="In" Type="Decimal" />
+            <Parameter Name="SchoolYearID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_GetStudentServiceDetail" ReturnType="Collection(DB_Magic_StudentModel.PROC_GetStudentServiceDetail_Result)">
+            <Parameter Name="StudentID" Mode="In" Type="Decimal" />
+            <Parameter Name="SchoolYearID" Mode="In" Type="Decimal" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="PROC_Get_District_Result">
+          <Property Type="Decimal" Name="DistrictID" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="DistrictName" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="PROC_Get_SchoolYear_Result">
+          <Property Type="Decimal" Name="SchoolYearId" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="SchoolYear" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PROC_GetStudentDetail_Result">
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DateOfBirth" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Ssn" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="StudentID" Nullable="false" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="PROC_GetStudentEnrollmentDetail_Result">
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DateOfBirth" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Ssn" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="StudentID" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="SchoolYear" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PROC_GetStudentServiceDetail_Result">
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DateOfBirth" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Ssn" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="StudentID" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="SchoolYear" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ServiceName" Nullable="true" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_Magic_StudentModelStoreContainer" CdmEntityContainer="DB_Magic_StudentEntities">
+          <EntitySetMapping Name="tbl_Master_District">
+            <EntityTypeMapping TypeName="DB_Magic_StudentModel.tbl_Master_District">
+              <MappingFragment StoreEntitySet="tbl_Master_District">
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="ModifyOn" ColumnName="ModifyOn" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Master_SchoolYear">
+            <EntityTypeMapping TypeName="DB_Magic_StudentModel.tbl_Master_SchoolYear">
+              <MappingFragment StoreEntitySet="tbl_Master_SchoolYear">
+                <ScalarProperty Name="SchoolYearId" ColumnName="SchoolYearId" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="ModifyOn" ColumnName="ModifyOn" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Master_Services">
+            <EntityTypeMapping TypeName="DB_Magic_StudentModel.tbl_Master_Services">
+              <MappingFragment StoreEntitySet="tbl_Master_Services">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="ModifyOn" ColumnName="ModifyOn" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Master_Student">
+            <EntityTypeMapping TypeName="DB_Magic_StudentModel.tbl_Master_Student">
+              <MappingFragment StoreEntitySet="tbl_Master_Student">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="RefDistrictId" ColumnName="RefDistrictId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Ssn" ColumnName="Ssn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="ModifyOn" ColumnName="ModifyOn" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Master_StudentEnrollment">
+            <EntityTypeMapping TypeName="DB_Magic_StudentModel.tbl_Master_StudentEnrollment">
+              <MappingFragment StoreEntitySet="tbl_Master_StudentEnrollment">
+                <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+                <ScalarProperty Name="RefStudentId" ColumnName="RefStudentId" />
+                <ScalarProperty Name="RefSchoolYearID" ColumnName="RefSchoolYearID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="ModifyOn" ColumnName="ModifyOn" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Master_StudentServices">
+            <EntityTypeMapping TypeName="DB_Magic_StudentModel.tbl_Master_StudentServices">
+              <MappingFragment StoreEntitySet="tbl_Master_StudentServices">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="RefStudentId" ColumnName="RefStudentId" />
+                <ScalarProperty Name="RefServiceID" ColumnName="RefServiceID" />
+                <ScalarProperty Name="RefSchoolYearID" ColumnName="RefSchoolYearID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+                <ScalarProperty Name="ModifyOn" ColumnName="ModifyOn" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_Get_District" FunctionName="DB_Magic_StudentModel.Store.PROC_Get_District">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_Magic_StudentModel.PROC_Get_District_Result">
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_Get_SchoolYear" FunctionName="DB_Magic_StudentModel.Store.PROC_Get_SchoolYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_Magic_StudentModel.PROC_Get_SchoolYear_Result">
+                <ScalarProperty Name="SchoolYearId" ColumnName="SchoolYearId" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_GetStudentDetail" FunctionName="DB_Magic_StudentModel.Store.PROC_GetStudentDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_Magic_StudentModel.PROC_GetStudentDetail_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Ssn" ColumnName="Ssn" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_GetStudentEnrollmentDetail" FunctionName="DB_Magic_StudentModel.Store.PROC_GetStudentEnrollmentDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_Magic_StudentModel.PROC_GetStudentEnrollmentDetail_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Ssn" ColumnName="Ssn" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_GetStudentServiceDetail" FunctionName="DB_Magic_StudentModel.Store.PROC_GetStudentServiceDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_Magic_StudentModel.PROC_GetStudentServiceDetail_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Ssn" ColumnName="Ssn" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
